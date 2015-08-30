@@ -1,0 +1,33 @@
+{
+  "name": "widenbot-aws",
+  "version": "1.0.0",
+  "description": "AWS plugin for widenbot",
+  "main": "index.js",
+  "scripts": {
+    "lint": "jshint index.js",
+    "unit-test": "tape ./test/*-test.js",
+    "coverage": "covert ./test/*-test.js",
+    "test": "npm run lint && npm run unit-test"
+  },
+  "keywords": [
+    "widenbot"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Widen/widenbot-aws.git"
+  },
+  "author": {
+    "name": "Mark Feltner",
+    "email": "mfeltner@widen.com",
+    "url": "http://widen.com"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "jshint": "^2.8.0",
+    "tape": "^4.2.0"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.1.48",
+    "promise": "^7.0.4"
+  }
+}
