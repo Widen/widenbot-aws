@@ -6,7 +6,7 @@ AWS.config.update({ region: 'us-east-1' });
 function ec2(args) {
     return new promise(function(resolve, reject){
         var ec2Client = new AWS.EC2();
-        if (args[0].indexOf('desc') !== -1) {
+        if (args[0] && args[0].indexOf('desc') !== -1) {
             ec2Client.describeInstances(function(error, data){
                 if (error) {
                     return reject(error);
@@ -22,8 +22,7 @@ function ec2(args) {
 function s3(args) {
     return new promise(function(resolve, reject){
         var s3Client = new AWS.S3();
-        if (args[0].indexOf('listBuckets') !== -1) {
-            console.log('listing buckets');
+        if (args[0] && args[0].indexOf('listBuckets') !== -1) {
             s3Client.listBuckets(function(error, data){
                 if (error) {
                     return reject(error);
