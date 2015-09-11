@@ -17,7 +17,7 @@ test('s3', function(t){
             info: console.log,
             error: console.error
         },
-        args: 's3 listBuckets',
+        args: 's3 listObjects Bucket=ml-hax',
         incoming_message: {
             user_name: 'feltnerm'
         }
@@ -39,7 +39,7 @@ test('ec2', function(t){
             info: console.log,
             error: console.error
         },
-        args: 'ec2 desc',
+        args: 'ec2 describeInstances',
         incoming_message: {
             user_name: 'feltnerm'
         }
