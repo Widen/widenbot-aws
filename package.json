@@ -29,6 +29,8 @@
   },
   "dependencies": {
     "aws-sdk": "^2.1.48",
+    "minimist": "^1.2.0",
+    "prettyjson": "^1.1.3",
     "promise": "^7.0.4",
     "shell-quote": "^1.4.3"
   }

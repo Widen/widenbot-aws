@@ -1,5 +1,7 @@
 var promise = require('promise'),
     AWS = require('aws-sdk'),
+    minimist = require('minimist'),
+    prettyjson = require('prettyjson'),
     argParse = require('shell-quote').parse;
 
 AWS.config.update({ region: 'us-east-1' });
@@ -9,7 +11,7 @@ var aws = module.exports = {
     "name": "aws",
     "author": "Mark Feltner",
     "description": "Query Services on AWS",
-    "help": "!aws [service] [command]",
+    "help": "!aws <service> <command> [<args>]",
 
     "pattern": /^aws/,
     "respond": function(ctx) {
@@ -18,9 +20,15 @@ var aws = module.exports = {
 
             var log = ctx.log;
 
-            var args = argParse(ctx.args),
+            var argv = minimist(argParse(ctx.args)),
+                args = argv._ ,
                 command = args[0],
                 subCommands = args.slice(1);
+
+            var format;
+            if (argv.format) {
+                format = argv.format;
+            }
 
             var instance, instance_constructor_name;
             if (command.length <= 3) {
@@ -44,13 +52,29 @@ var aws = module.exports = {
                     });
                 }
 
-                log.info(instance_constructor_name, subCommand, params);
+                log.info(instance_constructor_name + " " + subCommand + " " + params);
                 if (instance[subCommand] && typeof instance[subCommand] === 'function') {
                     instance[subCommand](params, function(err, data){
                         if (err) {
                             return reject(err);
                         }
-                        return resolve(JSON.stringify(data));
+                        var output = '';
+                        switch (format) {
+                            case 'pretty':
+                                output = prettyjson.render(data, { noColor: true });
+                                break;
+                            case 'min':
+                                output = JSON.stringify(data);
+                                break;
+                            default:
+                                output = JSON.stringify(data, null, '\t');
+                                break;
+                        }
+
+                        output = "```\n" +
+                                 output + "\n" +
+                                 "```\n";
+                        return resolve(output);
                     });
                 }
             }

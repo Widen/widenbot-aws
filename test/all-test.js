@@ -17,7 +17,7 @@ test('s3', function(t){
             info: console.log,
             error: console.error
         },
-        args: 's3 listObjects Bucket=ml-hax',
+        args: 's3 --format=pretty listObjects Bucket=ml-hax',
         incoming_message: {
             user_name: 'feltnerm'
         }
