@@ -54,6 +54,10 @@ var aws = module.exports = {
             case 's3': {
                 return s3(args.slice(1));
             }
+            default:
+                return new promise(function(resolve, reject){
+                    reject(new Error('aws sub-command ' + args[0] + ' did not match. Try s3 or ec2.'));
+                });
         }
     }
 };
